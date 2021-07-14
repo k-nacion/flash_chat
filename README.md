@@ -17,5 +17,5 @@ samples, guidance on mobile development, and a full API reference.
 
 
 ![Sample1](sample1.png)
-![sample2 ](Sample2.png)
-![sample3](Sample3.png)
+![sample2 ](sample2.png)
+![sample3](sample3.png)
