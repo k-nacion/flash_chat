@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flash_chat/routes/chat_screen.dart';
-import 'package:flash_chat/routes_mock/sign_in_screen.dart';
-import 'package:flash_chat/routes_mock/sign_up_screen.dart';
-import 'package:flash_chat/routes_mock/splash_screen.dart';
+import 'package:flash_chat/routes/sign_in_screen.dart';
+import 'package:flash_chat/routes/sign_up_screen.dart';
+import 'package:flash_chat/routes/splash_screen.dart';
 import 'package:flash_chat/util/constants/routes.dart';
 import 'package:flash_chat/util/theme.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +20,11 @@ class FlashChat extends StatelessWidget {
     return MaterialApp(
       theme: appTheme(),
       debugShowCheckedModeBanner: false,
-      initialRoute: NewRoutes.splash,
+      initialRoute: Routes.splash,
       routes: {
-        NewRoutes.splash: (_) => SplashScreen(),
-        NewRoutes.signIn: (_) => SignInScreen(),
-        NewRoutes.signUp: (_) => SignUpScreen(),
+        Routes.splash: (_) => SplashScreen(),
+        Routes.signIn: (_) => SignInScreen(),
+        Routes.signUp: (_) => SignUpScreen(),
         Routes.chat: (_) => ChatScreen(),
       },
     );

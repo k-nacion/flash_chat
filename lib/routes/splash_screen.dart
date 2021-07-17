@@ -8,7 +8,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final duration = Duration(milliseconds: 2000);
-    Future.delayed(duration, () => Navigator.popAndPushNamed(context, NewRoutes.signIn));
+    Future.delayed(duration, () => Navigator.popAndPushNamed(context, Routes.signIn));
 
     return Scaffold(
       body: SafeArea(

@@ -1,24 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flash_chat/util/constants/routes.dart';
 import 'package:flash_chat/widgets/app_title_logo.dart';
 import 'package:flash_chat/widgets/circular_button.dart';
-import 'package:flash_chat/widgets/text_input.dart';
+import 'package:flash_chat/widgets/form_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class SignInScreen extends StatefulWidget {
-  static const route = '/signIn';
+class SignUpScreen extends StatelessWidget {
+  static const route = '/signUp';
 
-  @override
-  _SignInScreenState createState() => _SignInScreenState();
-}
+  final _auth = FirebaseAuth.instance;
 
-class _SignInScreenState extends State<SignInScreen> {
-  var _auth = FirebaseAuth.instance;
-  var _keepSignIn = false;
-
-  final _usernameTextController = TextEditingController();
+  final _firstNameTextController = TextEditingController();
+  final _lastNameTextController = TextEditingController();
+  final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
 
   @override
@@ -40,7 +35,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 Hero(tag: 'appTitleLogo', child: AppTitleLogo()),
                 SizedBox(height: 72),
                 Text(
-                  'Sign In',
+                  'Sign Up',
                   textAlign: TextAlign.center,
                   style:
                       Theme.of(context).textTheme.headline5!.copyWith(fontWeight: FontWeight.bold),
@@ -50,7 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'New user?',
+                      'Already a user?',
                       style: Theme.of(context).textTheme.subtitle2!.copyWith(
                             fontWeight: FontWeight.bold,
                             letterSpacing: 1,
@@ -58,9 +53,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     SizedBox(width: 4),
                     GestureDetector(
-                      onTap: () => createUser(),
+                      onTap: () {
+                        //TODO: implement the action for this.`
+                        Navigator.pop(context);
+                      },
                       child: Text(
-                        'Create an account',
+                        'Sign In',
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).accentColor,
@@ -70,58 +68,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 48),
-                TextInputField(
-                  hint: 'Username or email',
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _usernameTextController,
+                SignUpFormArea(
+                  firstNameTextController: _firstNameTextController,
+                  lastNameTextController: _lastNameTextController,
+                  emailTextController: _emailTextController,
+                  passwordTextController: _passwordTextController,
                 ),
-                SizedBox(height: 16),
-                TextInputField(
-                  hint: 'Password',
-                  obscureText: true,
-                  keyboardType: TextInputType.text,
-                  controller: _passwordTextController,
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _keepSignIn,
-                      onChanged: (value) {
-                        setState(() {
-                          _keepSignIn = value!;
-                        });
-                      },
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Keep me signed in',
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Material(
-                  color: Theme.of(context).primaryColor,
-                  child: InkWell(
-                    splashColor: Colors.black.withOpacity(.5),
-                    onTap: signInWithUsernameAndEmail,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Center(
-                        child: Text(
-                          'Sign In',
-                          style: Theme.of(context)
-                              .textTheme
-                              .button!
-                              .copyWith(fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 32),
                 Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -132,7 +84,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         endIndent: 22,
                       ),
                     ),
-                    Text('Or Sign In With'),
+                    Text('Or Sign Up With'),
                     Expanded(
                       child: Divider(
                         indent: 22,
@@ -163,20 +115,25 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  void signInWithUsernameAndEmail() async {
+  Future<void>? signUpWithUsernameAndEmail(BuildContext context) async {
     try {
-      var user = await _auth.signInWithEmailAndPassword(
-          email: _usernameTextController.value.text, password: _passwordTextController.value.text);
+      var userCreated = await _auth.createUserWithEmailAndPassword(
+        email: _emailTextController.value.text,
+        password: _passwordTextController.value.text,
+      );
 
-      Navigator.popAndPushNamed(context, Routes.chat, arguments: user);
-    } catch (e) {
+      var snackBar = SnackBar(
+        content: Text('User has been created'),
+        action: SnackBarAction(
+          label: 'Dismiss',
+          onPressed: () {},
+        ),
+      );
+
+      Navigator.pop(context, snackBar);
+    } catch (e, s) {
+      print(s);
       print(e);
     }
-  }
-
-  void createUser() async {
-    var snackBar = await Navigator.pushNamed(context, NewRoutes.signUp);
-
-    ScaffoldMessenger.of(context).showSnackBar(snackBar as SnackBar);
   }
 }
