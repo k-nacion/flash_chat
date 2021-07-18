@@ -9,6 +9,8 @@ import 'package:flash_chat/routes/splash_screen.dart';
  * ****************************************/
 
 class Routes {
+  const Routes._();
+
   static const splash = SplashScreen.route;
   static const signIn = SignInScreen.route;
   static const signUp = SignUpScreen.route;

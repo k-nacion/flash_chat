@@ -33,17 +33,14 @@ class SocialSitesButtons extends StatelessWidget {
           ],
         ),
         SizedBox(height: 32),
-        Hero(
-          tag: 'sns',
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CircularButton(icon: FontAwesomeIcons.google),
-              CircularButton(icon: FontAwesomeIcons.facebook),
-              CircularButton(icon: FontAwesomeIcons.linkedin),
-              CircularButton(icon: FontAwesomeIcons.twitter),
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            CircularButton(icon: FontAwesomeIcons.google),
+            CircularButton(icon: FontAwesomeIcons.facebook),
+            CircularButton(icon: FontAwesomeIcons.linkedin),
+            CircularButton(icon: FontAwesomeIcons.twitter),
+          ],
         ),
       ],
     );

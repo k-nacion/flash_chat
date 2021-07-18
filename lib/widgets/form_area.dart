@@ -1,5 +1,4 @@
-import 'package:flash_chat/widgets/always_login_checkbox.dart';
-import 'package:flash_chat/widgets/routes/solid_button.dart';
+import 'package:flash_chat/widgets/solid_button.dart';
 import 'package:flash_chat/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 
@@ -69,95 +68,5 @@ class FormArea extends StatelessWidget {
 
   Widget? renderOtherForms() {
     return otherForm != null ? otherForm : null;
-  }
-}
-
-class LoginFormArea extends StatefulWidget {
-  LoginFormArea({
-    Key? key,
-    required this.usernameTextController,
-    required this.passwordTextController,
-    required this.isAlwaysLoggedIn,
-  });
-
-  final bool isAlwaysLoggedIn;
-  final TextEditingController usernameTextController;
-  final TextEditingController passwordTextController;
-
-  @override
-  _LoginFormAreaState createState() => _LoginFormAreaState();
-}
-
-class _LoginFormAreaState extends State<LoginFormArea> {
-  @override
-  Widget build(BuildContext context) {
-    return FormArea(
-      textFormList: [
-        TextFormInputField(
-          hint: 'Email',
-          keyboardType: TextInputType.emailAddress,
-          controller: widget.usernameTextController,
-        ),
-        TextFormInputField(
-          hint: 'Password',
-          obscureText: true,
-          keyboardType: TextInputType.text,
-          controller: widget.passwordTextController,
-          validator: (string) {
-            if (string == null || string.isEmpty || (string.length <= 6)) {
-              return 'Password must be at least 6 characters';
-            }
-          },
-        ),
-      ],
-      otherForm: AlwaysLoginCheckbox(value: widget.isAlwaysLoggedIn),
-      buttonLabel: 'Sign In',
-      whenFormIsValid: () {},
-    );
-  }
-}
-
-class SignUpFormArea extends StatelessWidget {
-  final TextEditingController firstNameTextController;
-  final TextEditingController lastNameTextController;
-  final TextEditingController emailTextController;
-  final TextEditingController passwordTextController;
-
-  SignUpFormArea({
-    required this.firstNameTextController,
-    required this.lastNameTextController,
-    required this.emailTextController,
-    required this.passwordTextController,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FormArea(
-      textFormList: [
-        TextFormInputField(
-          hint: 'First Name',
-          controller: firstNameTextController,
-          keyboardType: TextInputType.name,
-        ),
-        TextFormInputField(
-          hint: 'Last Name',
-          controller: lastNameTextController,
-          keyboardType: TextInputType.name,
-        ),
-        TextFormInputField(
-          hint: 'Email',
-          keyboardType: TextInputType.emailAddress,
-          controller: emailTextController,
-        ),
-        TextFormInputField(
-          hint: 'Password',
-          keyboardType: TextInputType.text,
-          controller: passwordTextController,
-          obscureText: true,
-        ),
-      ],
-      buttonLabel: 'Sign Up',
-      whenFormIsValid: () {},
-    );
   }
 }
