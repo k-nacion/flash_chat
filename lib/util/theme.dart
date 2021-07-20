@@ -36,5 +36,10 @@ ThemeData appTheme() {
           horizontal: VisualDensity.minimumDensity,
         ),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap),
+    dividerTheme: DividerThemeData(
+      color: ThemeData.estimateBrightnessForColor(color60) == Brightness.light
+          ? Colors.black.withOpacity(.5)
+          : Colors.white.withOpacity(.5),
+    ),
   );
 }

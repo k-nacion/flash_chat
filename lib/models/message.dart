@@ -9,5 +9,5 @@ class Message {
     return 'Message{message: $text, sender: $sender}';
   }
 
-  Map toMap() => {'message': text, 'sender': sender};
+  Map<String, dynamic> toMap() => {'message': text, 'sender': sender};
 }

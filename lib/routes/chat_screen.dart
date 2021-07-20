@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/constants.dart';
+import 'package:flash_chat/models/message.dart';
+import 'package:flash_chat/services/firebase_helper.dart';
 import 'package:flash_chat/util/constants/routes.dart';
+import 'package:flash_chat/widgets/chat_screen/chat_conversation_container.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -11,6 +14,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final TextEditingController chatMessage = TextEditingController();
+
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +27,6 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () async {
-                //Implement logout functionality
-                final _auth = FirebaseAuth.instance;
-
                 await _auth.signOut();
                 Navigator.popAndPushNamed(context, Routes.splash);
               }),
@@ -34,7 +38,10 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
+          children: [
+            Expanded(
+              child: ChatConversationContainer(),
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -46,12 +53,11 @@ class _ChatScreenState extends State<ChatScreen> {
                         //Do something with the user input.
                       },
                       decoration: kMessageTextFieldDecoration,
+                      controller: chatMessage,
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      //Implement send functionality.
-                    },
+                    onPressed: sendMessage,
                     child: Text(
                       'Send',
                       style: kSendButtonTextStyle,
@@ -64,5 +70,20 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ),
     );
+  }
+
+  void sendMessage() async {
+    FirestoreHelper.storeMessage(
+      message: Message(
+        text: chatMessage.value.text,
+        sender: _auth.currentUser!.email!,
+      ),
+    );
+
+    chatMessage.clear();
+  }
+
+  void getMessage() async {
+    FirestoreHelper.retrieveMessages();
   }
 }

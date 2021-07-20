@@ -8,10 +8,14 @@ import 'form_area.dart';
 class LoginFormArea extends StatefulWidget {
   final void Function(bool value) isHudLoading;
 
-  LoginFormArea({required this.isHudLoading});
+  LoginFormArea({
+    required this.isHudLoading,
+    required this.usernameTextController,
+    required this.passwordTextController,
+  });
 
-  final TextEditingController usernameTextController = TextEditingController();
-  final TextEditingController passwordTextController = TextEditingController();
+  final TextEditingController usernameTextController;
+  final TextEditingController passwordTextController;
 
   @override
   _LoginFormAreaState createState() => _LoginFormAreaState();
@@ -54,9 +58,19 @@ class _LoginFormAreaState extends State<LoginFormArea> {
           print(e);
         } finally {
           widget.isHudLoading(false);
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Oh no!'),
+              content: Text('Username/Password did not match'),
+            ),
+          );
         }
 
         Navigator.popAndPushNamed(context, Routes.chat, arguments: user);
+      },
+      whenFormIsInvalid: () {
+        widget.isHudLoading(false);
       },
     );
   }

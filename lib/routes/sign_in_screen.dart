@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/util/constants/routes.dart';
 import 'package:flash_chat/widgets/app_title_logo.dart';
 import 'package:flash_chat/widgets/form_area_login.dart';
@@ -15,9 +14,10 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  var _auth = FirebaseAuth.instance;
-
   var isHudLoading = false;
+
+  final TextEditingController usernameTextController = TextEditingController();
+  final TextEditingController passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,6 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Center(
           child: SingleChildScrollView(
             child: Container(
-              // decoration: BoxDecoration(border: Border.all()),
               margin: EdgeInsets.symmetric(horizontal: 16),
               padding: EdgeInsets.all(16),
               child: Column(
@@ -74,9 +73,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     ],
                   ),
                   LoginFormArea(
-                      isHudLoading: (value) => setState(() {
-                            this.isHudLoading = value;
-                          })),
+                    isHudLoading: (value) => setState(() {
+                      this.isHudLoading = value;
+                    }),
+                    usernameTextController: usernameTextController,
+                    passwordTextController: passwordTextController,
+                  ),
                   // SizedBox(height: 32),
                   SocialSitesButtons(caption: 'or Sign In With'),
                 ],
