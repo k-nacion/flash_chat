@@ -23,13 +23,7 @@ class _ChatConversationContainerState extends State<ChatConversationContainer> {
             if (snapshot.hasData) {
               final firestoreSnapshot = snapshot.data as QuerySnapshot<Map<String, dynamic>>;
 
-              // for (final doc in firestoreSnapshot.docs) {
-              //   print('Doc snapshots');
-              //
-              //   print(doc.data()['message']);
-              //   print(doc.data()['sender']);
-              //   print('-------------------------');
-              // }
+              //TODO: Replace this UI with Listview.builder
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -41,8 +35,8 @@ class _ChatConversationContainerState extends State<ChatConversationContainer> {
                     final String sender = document.data()['sender'];
 
                     return ChatBubbleContainer(
-                        message: document.data()['message'] as String,
-                        sender: document.data()['sender'] as String,
+                        message: message,
+                        sender: sender,
                         isTheSender: sender == FirebaseAuth.instance.currentUser!.email);
                     // return ChatBubble(
                     //     document.data()['message'] as String, document.data()['sender'] as String);
