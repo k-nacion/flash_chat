@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/util/constants/routes.dart';
-import 'package:flash_chat/widgets/text_input.dart';
+import 'package:flash_chat/widgets/forms/text_form_input_field.dart';
 import 'package:flutter/material.dart';
 
 import 'form_area.dart';
