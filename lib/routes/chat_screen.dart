@@ -47,11 +47,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
-                      onChanged: (value) {
-                        //Do something with the user input.
-                      },
                       decoration: kMessageTextFieldDecoration,
                       controller: chatMessage,
+                      onSubmitted: (_) => sendMessage(),
                     ),
                   ),
                   TextButton(
