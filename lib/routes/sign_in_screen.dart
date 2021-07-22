@@ -1,6 +1,6 @@
 import 'package:flash_chat/util/constants/routes.dart';
 import 'package:flash_chat/widgets/app_title_logo.dart';
-import 'package:flash_chat/widgets/form_area_login.dart';
+import 'package:flash_chat/widgets/forms/form_area_login.dart';
 import 'package:flash_chat/widgets/social_sites_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
