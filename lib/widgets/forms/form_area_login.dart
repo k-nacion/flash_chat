@@ -32,6 +32,7 @@ class _LoginFormAreaState extends State<LoginFormArea> {
           hint: 'Email',
           keyboardType: TextInputType.emailAddress,
           controller: widget.usernameTextController,
+          textInputAction: TextInputAction.next,
         ),
         TextFormInputField(
           hint: 'Password',
