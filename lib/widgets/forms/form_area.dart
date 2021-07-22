@@ -1,6 +1,7 @@
-import 'package:flash_chat/widgets/solid_button.dart';
 import 'package:flash_chat/widgets/forms/text_form_input_field.dart';
 import 'package:flutter/material.dart';
+
+import '../solid_button.dart';
 
 class FormArea extends StatelessWidget {
   FormArea({
