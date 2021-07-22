@@ -3,7 +3,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/models/message.dart';
 import 'package:flash_chat/services/firebase_helper.dart';
 import 'package:flash_chat/util/constants/routes.dart';
-import 'package:flash_chat/widgets/chat_screen/chat_conversation_container.dart';
+import 'package:flash_chat/widgets/chat_screen/bubbles/bubble_list.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -39,9 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: ChatConversationContainer(),
-            ),
+            Expanded(child: BubbleList()),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -75,8 +73,8 @@ class _ChatScreenState extends State<ChatScreen> {
   void sendMessage() async {
     FirestoreHelper.storeMessage(
       message: Message(
-        text: chatMessage.value.text,
-        sender: _auth.currentUser!.email!,
+        message: chatMessage.value.text,
+        author: _auth.currentUser!.email!,
       ),
     );
 
