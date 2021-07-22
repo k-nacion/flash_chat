@@ -9,26 +9,18 @@ import 'bubble.dart';
 class BubbleList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      stream: FirestoreHelper.retrieveStreamMessages(),
+    return StreamBuilder<QuerySnapshot<Message>>(
+      stream: FirestoreHelper.retrieveStreamMessagesWithConverter(descending: true),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final _messageCollection = snapshot.data!;
-          final _reverseList = _messageCollection.docs.reversed.toList();
 
           return ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 10),
             itemCount: _messageCollection.size,
             itemBuilder: (_, index) {
-              final author = _reverseList[index].data()[MessageFields.author.toString()];
-              final message = _reverseList[index].data()[MessageFields.message.toString()];
-              final dateTime =
-                  (_reverseList[index].data()[MessageFields.datetime.toString()] as Timestamp)
-                      .toDate();
-
-              return Bubble(
-                message: Message(author: author, message: message, dateTime: dateTime),
-              );
+              final message = _messageCollection.docs[index].data();
+              return Bubble(message: message);
             },
             reverse: true,
           );
