@@ -1,17 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/models/message.dart';
 import 'package:flash_chat/models/user.dart' as user;
-
-class FirebaseAuthHelper {
-  static Future<void> signIn({
-    required FirebaseAuth instance,
-    required String email,
-    required String password,
-  }) async {
-    await instance.signInWithEmailAndPassword(email: email, password: password);
-  }
-}
 
 class FirestoreHelper {
   static const _messageCollectionPath = '/messages';
@@ -22,15 +11,21 @@ class FirestoreHelper {
   static Future<void> storeMessage({
     required Message message,
   }) async {
-    CollectionReference reference = _firestoreInstance.collection(_messageCollectionPath);
-    await reference.add(message.toMap());
+    CollectionReference reference =
+        _firestoreInstance.collection(_messageCollectionPath).withConverter<Message>(
+              fromFirestore: (snapshot, _) => message,
+              toFirestore: (message, _) => message.toMap(),
+            );
+
+    await reference.add(message);
   }
 
   static Future<void> storeUser({
-    required user.User user,
+    required user.User newUser,
   }) async {
-    final reference = _firestoreInstance.collection(_userCollectionPath);
-    await reference.add(user.toMap());
+    final reference = _firestoreInstance.collection(_userCollectionPath).withConverter<user.User>(
+        fromFirestore: (snapshot, _) => newUser, toFirestore: (newUser, _) => newUser.toMap());
+    await reference.add(newUser);
   }
 
   static Future<void> retrieveMessages() async {
@@ -40,7 +35,25 @@ class FirestoreHelper {
     }
   }
 
-  static Stream<QuerySnapshot<Map<String, dynamic>>> retrieveStreamMessages() {
-    return _firestoreInstance.collection(_messageCollectionPath).snapshots();
+  static Stream<QuerySnapshot<Message>> retrieveStreamMessages() {
+    return _firestoreInstance
+        .collection(_messageCollectionPath)
+        .withConverter<Message>(
+          fromFirestore: (snapshot, _) => Message.fromFirestore(snapshot.data()!),
+          toFirestore: (message, _) => message.toMap(),
+        )
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot<Message>> retrieveStreamMessagesWithConverter(
+      {bool descending = false}) {
+    return _firestoreInstance
+        .collection(_messageCollectionPath)
+        .withConverter<Message>(
+          fromFirestore: (snapshot, _) => Message.fromFirestore(snapshot.data()!),
+          toFirestore: (message, _) => message.toMap(),
+        )
+        .orderBy(Message.dateTimeField, descending: descending)
+        .snapshots();
   }
 }

@@ -9,6 +9,7 @@ class TextFormInputField extends TextFormField {
     String obscuringCharacter = '•',
     TextEditingController? controller,
     String? Function(String?)? validator,
+    TextInputAction? textInputAction,
     void Function(String)? onFieldSubmitted,
   }) : super(
           key: key,
@@ -19,6 +20,7 @@ class TextFormInputField extends TextFormField {
           decoration: InputDecoration(
             hintText: hint,
           ),
+          textInputAction: textInputAction,
           validator: validator,
           onFieldSubmitted: onFieldSubmitted,
         );

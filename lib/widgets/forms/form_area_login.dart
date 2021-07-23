@@ -32,6 +32,7 @@ class _LoginFormAreaState extends State<LoginFormArea> {
           hint: 'Email',
           keyboardType: TextInputType.emailAddress,
           controller: widget.usernameTextController,
+          textInputAction: TextInputAction.next,
         ),
         TextFormInputField(
           hint: 'Password',
@@ -43,18 +44,18 @@ class _LoginFormAreaState extends State<LoginFormArea> {
               return 'Password must be at least 6 characters';
             }
           },
-          onFieldSubmitted: (_) => _signIn(),
+          onFieldSubmitted: (_) => _signIn(context),
         ),
       ],
       buttonLabel: 'Sign In',
-      whenFormIsValid: _signIn,
+      whenFormIsValid: () => _signIn(context),
       whenFormIsInvalid: () {
         widget.isHudLoading(false);
       },
     );
   }
 
-  void _signIn() async {
+  void _signIn(BuildContext context) async {
     widget.isHudLoading(true);
 
     late var user;
