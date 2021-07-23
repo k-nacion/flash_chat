@@ -28,6 +28,7 @@ class SignUpFormArea extends StatelessWidget {
               return 'Required field!';
             }
           },
+          textInputAction: TextInputAction.next,
         ),
         TextFormInputField(
           hint: 'Last Name',
@@ -38,6 +39,7 @@ class SignUpFormArea extends StatelessWidget {
               return 'Required field!';
             }
           },
+          textInputAction: TextInputAction.next,
         ),
         TextFormInputField(
           hint: 'Email',
@@ -51,6 +53,7 @@ class SignUpFormArea extends StatelessWidget {
             //Known issue is that UI doesn't show when the email is not correct format.
             //Firebase throws an error but no solution I have come up with yet.
           },
+          textInputAction: TextInputAction.next,
         ),
         TextFormInputField(
           hint: 'Password',
@@ -62,6 +65,7 @@ class SignUpFormArea extends StatelessWidget {
               return 'Password must be at least 6 characters';
             }
           },
+          textInputAction: TextInputAction.done,
         ),
       ],
       buttonLabel: 'Sign Up',
