@@ -22,6 +22,7 @@ class MessageView extends StatelessWidget {
               return MessageRow(message: message);
             },
             reverse: true,
+            padding: EdgeInsets.symmetric(vertical: 8),
           );
         }
 
