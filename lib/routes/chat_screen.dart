@@ -3,7 +3,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/models/message.dart';
 import 'package:flash_chat/services/firebase_helper.dart';
 import 'package:flash_chat/util/constants/routes.dart';
-import 'package:flash_chat/widgets/chat_screen/bubbles/bubble_list.dart';
+import 'package:flash_chat/widgets/chat_screen/message/message_view.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(child: BubbleList()),
+            Expanded(child: MessageView()),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(

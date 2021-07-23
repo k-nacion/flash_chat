@@ -4,9 +4,9 @@ import 'package:flash_chat/services/firebase_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'bubble.dart';
+import 'message_row.dart';
 
-class BubbleList extends StatelessWidget {
+class MessageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Message>>(
@@ -16,11 +16,10 @@ class BubbleList extends StatelessWidget {
           final _messageCollection = snapshot.data!;
 
           return ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 10),
             itemCount: _messageCollection.size,
             itemBuilder: (_, index) {
               final message = _messageCollection.docs[index].data();
-              return Bubble(message: message);
+              return MessageRow(message: message);
             },
             reverse: true,
           );
